@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veridia - Hiring Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(to bottom right, #ecfdf5, #ffffff, #f0fdfa);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to bottom right, #047857, #0d9488);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #047857, #0d9488);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #047857;
+            border: 2px solid #047857;
+        }
+
+        .btn-secondary:hover {
+            background: #ecfdf5;
+        }
+
+        .btn-link {
+            color: #047857;
+            background: transparent;
+        }
+
+        .btn-link:hover {
+            color: #065f46;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Landing Page */
+        .hero {
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #047857, #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #ecfdf5;
+            color: #047857;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+            transition: box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(to bottom right, #ecfdf5, #d1fae5);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #f3f4f6;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(to bottom right, #047857, #0d9488);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .auth-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            padding-left: 3rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #047857;
+            box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .divider {
+            position: relative;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            position: relative;
+            background: white;
+            padding: 0 1rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.75rem;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 2rem;
+        }
+
+        .dashboard-body {
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+        }
+
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-submitted { background: #f3f4f6; color: #374151; }
+        .status-review { background: #dbeafe; color: #1e40af; }
+        .status-selected { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #047857, #0d9488);
+            transition: width 0.3s;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .dashboard-header {
+                padding: 1rem;
+            }
+
+            .dashboard-body {
+                padding: 1rem;
+            }
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none;
+        }
+
+        .mt-4 { margin-top: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .text-center { text-align: center; }
+        .text-sm { font-size: 0.875rem; }
+        .text-gray { color: #6b7280; }
+        .flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-4 { gap: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">V</div>
+                        <span class="logo-text">Veridia</span>
+                    </div>
+                    <a href="#" onclick="showPage('login')" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="badge">Join Veridia – We're Hiring</div>
+                        <h1>Build Your Career with <span class="gradient-text">Veridia</span></h1>
+                        <p>Join a forward-thinking tech company where innovation meets opportunity. We're looking for talented individuals to help us shape the future.</p>
+                        <div class="hero-buttons">
+                            <a href="#" onclick="showPage('register')" class="btn btn-primary">Apply Now →</a>
+                            <a href="#" onclick="showPage('login')" class="btn btn-secondary">Login to Portal</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800" alt="Team collaboration">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="features-header">
+                    <h2>Why Choose Veridia?</h2>
+                    <p class="text-gray">We offer more than just a job – we offer a career path filled with growth and opportunities</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" fill="none" stroke="#047857" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Collaborative Culture</h3>
+                        <p>Work with talented professionals in a supportive environment that values teamwork and innovation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Career Growth</h3>
+                        <p>Access continuous learning opportunities and clear career progression paths tailored to your goals.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" fill="none" stroke="#047857" stroke-width="2" viewBox="0 0 24 24">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Recognition & Rewards</h3>
+                        <p>Competitive compensation, comprehensive benefits, and recognition programs that celebrate your achievements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-logo">V</div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to your Veridia account</p>
+                </div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉</span>
+                            <input type="email" id="login-email" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="login-password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is-admin">
+                            <label for="is-admin" class="text-sm">Login as Admin/HR</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                </form>
+                <div class="divider">
+                    <span>Don't have an account?</span>
+                </div>
+                <a href="#" onclick="showPage('register')" class="btn btn-secondary" style="width: 100%; text-align: center;">Create an Account</a>
+                <p class="text-center text-sm text-gray mt-4">
+                    <a href="#" onclick="showPage('landing')" class="btn-link">← Back to Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="register-page" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-logo">V</div>
+                    <h2>Create Account</h2>
+                    <p>Join Veridia today</p>
+                </div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="full-name" placeholder="John Doe" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉</span>
+                            <input type="email" id="reg-email" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📞</span>
+                            <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="reg-password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+                <div class="divider">
+                    <span>Already have an account?</span>
+                </div>
+                <a href="#" onclick="showPage('login')" class="btn btn-secondary" style="width: 100%; text-align: center;">Sign In</a>
+                <p class="text-center text-sm text-gray mt-4">
+                    <a href="#" onclick="showPage('landing')" class="btn-link">← Back to Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Form Page -->
+    <div id="application-page" class="page">
+        <div class="auth-container">
+            <div style="max-width: 800px; width: 100%;">
+                <div class="text-center mb-4">
+                    <div class="auth-logo" style="margin: 0 auto 1rem;">V</div>
+                    <h1>Job Application</h1>
+                    <p class="text-gray">Complete your application in 4 simple steps</p>
+                </div>
+
+                <div class="card">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <span id="step-1" style="color: #047857; font-weight: 500;">Personal</span>
+                        <span id="step-2">Education</span>
+                        <span id="step-3">Experience</span>
+                        <span id="step-4">Review</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <form id="application-form" onsubmit="handleApplicationSubmit(event)">
+                        <!-- Step 1 -->
+                        <div class="form-step" id="form-step-1">
+                            <h2 class="mb-4">Personal Details</h2>
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" id="first-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" id="last-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="app-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="app-phone" required>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="form-step hidden" id="form-step-2">
+                            <h2 class="mb-4">Education</h2>
+                            <div class="form-group">
+                                <label>Highest Degree</label>
+                                <input type="text" id="degree" placeholder="e.g., Bachelor of Science" required>
+                            </div>
+                            <div class="form-group">
+                                <label>University</label>
+                                <input type="text" id="university" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Graduation Year</label>
+                                <input type="number" id="grad-year" placeholder="2024" required>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="form-step hidden" id="form-step-3">
+                            <h2 class="mb-4">Skills & Experience</h2>
+                            <div class="form-group">
+                                <label>Position Applied For</label>
+                                <input type="text" id="position" placeholder="e.g., Senior Software Engineer" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Years of Experience</label>
+                                <input type="number" id="experience" placeholder="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Key Skills (comma-separated)</label>
+                                <textarea id="skills" placeholder="React, TypeScript, Node.js" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="form-step hidden" id="form-step-4">
+                            <h2 class="mb-4">Final Steps</h2>
+                            <div class="form-group">
+                                <label>Cover Letter</label>
+                                <textarea id="cover-letter" placeholder="Tell us why you're interested..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Resume (PDF, DOC)</label>
+                                <input type="file" id="resume" accept=".pdf,.doc,.docx" required>
+                            </div>
+                            <div class="card" style="background: #ecfdf5; border-color: #a7f3d0;">
+                                <p class="text-sm"><strong>Please review your information carefully.</strong> By submitting, you agree that the information is accurate.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between gap-4 mt-4">
+                            <button type="button" id="prev-btn" class="btn btn-secondary hidden" onclick="previousStep()">Previous</button>
+                            <button type="button" id="next-btn" class="btn btn-primary" onclick="nextStep()" style="flex: 1;">Next Step</button>
+                            <button type="submit" id="submit-btn" class="btn btn-primary hidden" style="flex: 1;">Submit Application</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidate Dashboard -->
+    <div id="candidate-dashboard" class="page">
+        <div class="dashboard">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">
+                        <div class="logo-icon">V</div>
+                        <div>
+                            <div class="logo-text" style="font-size: 1.25rem;">Veridia</div>
+                            <p class="text-sm text-gray">Candidate Portal</p>
+                        </div>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a class="nav-item active">📊 Overview</a>
+                    <a class="nav-item">📄 My Applications</a>
+                    <a class="nav-item">👤 Profile</a>
+                </nav>
+                <div style="padding: 1rem; border-top: 1px solid #e5e7eb;">
+                    <a href="#" onclick="showPage('landing')" class="nav-item">🚪 Logout</a>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <h1>Welcome back, John Doe!</h1>
+                    <p class="text-gray">Track your application status and manage your profile</p>
+                </div>
+
+                <div class="dashboard-body">
+                    <div class="card" style="background: linear-gradient(to right, #047857, #0d9488); color: white; padding: 2rem;">
+                        <h2 style="color: white; margin-bottom: 0.5rem;">Application Status</h2>
+                        <p style="color: rgba(255, 255, 255, 0.9);">Your application is currently under review</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Applications</h3>
+                            <div class="value">1</div>
+                            <p class="text-sm text-gray">Total submitted</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Status</h3>
+                            <span class="status-badge status-review">Under Review</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Applied Date</h3>
+                            <div class="value" style="font-size: 1rem;">Jan 10, 2026</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="mb-4">Application Timeline</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="flex items-center gap-4">
+                                <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-weight: 500;">Application Submitted</p>
+                                    <p class="text-sm text-gray">January 10, 2026</p>
+                                </div>
+                                <span>✓</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div style="width: 8px; height: 8px; background: #3b82f6; border-radius: 50%;"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-weight: 500;">Under Review</p>
+                                    <p class="text-sm text-gray">In progress</p>
+                                </div>
+                                <span>⏳</span>
+                            </div>
+                            <div class="flex items-center gap-4" style="opacity: 0.5;">
+                                <div style="width: 8px; height: 8px; background: #9ca3af; border-radius: 50%;"></div>
+                                <div style="flex: 1;">
+                                    <p style="font-weight: 500;">Interview Scheduled</p>
+                                    <p class="text-sm text-gray">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="page">
+        <div class="dashboard">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">
+                        <div class="logo-icon">V</div>
+                        <div>
+                            <div class="logo-text" style="font-size: 1.25rem;">Veridia</div>
+                            <p class="text-sm text-gray">HR Admin Panel</p>
+                        </div>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a class="nav-item active">📊 Dashboard</a>
+                    <a class="nav-item">👥 Candidates</a>
+                    <a class="nav-item">📄 Applications</a>
+                    <a class="nav-item">⚙️ Settings</a>
+                </nav>
+                <div style="padding: 1rem; border-top: 1px solid #e5e7eb;">
+                    <a href="#" onclick="showPage('landing')" class="nav-item">🚪 Logout</a>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Candidate Management</h1>
+                        <p class="text-gray">Review and manage job applications</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Applications</h3>
+                            <div class="value">156</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Under Review</h3>
+                            <div class="value">42</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Selected</h3>
+                            <div class="value">18</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Rejected</h3>
+                            <div class="value">12</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3>Recent Candidates</h3>
+                            <select class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                <option>All Status</option>
+                                <option>Submitted</option>
+                                <option>Under Review</option>
+                                <option>Selected</option>
+                            </select>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Position</th>
+                                    <th>Applied Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <div style="width: 40px; height: 40px; background: linear-gradient(to bottom right, #047857, #0d9488); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">J</div>
+                                            <div>
+                                                <p style="font-weight: 500;">John Doe</p>
+                                                <p class="text-sm text-gray">john@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Senior Software Engineer</td>
+                                    <td>2026-01-10</td>
+                                    <td><span class="status-badge status-review">Under Review</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <div style="width: 40px; height: 40px; background: linear-gradient(to bottom right, #047857, #0d9488); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">J</div>
+                                            <div>
+                                                <p style="font-weight: 500;">Jane Smith</p>
+                                                <p class="text-sm text-gray">jane@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Product Designer</td>
+                                    <td>2026-01-12</td>
+                                    <td><span class="status-badge status-submitted">Submitted</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <div style="width: 40px; height: 40px; background: linear-gradient(to bottom right, #047857, #0d9488); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">M</div>
+                                            <div>
+                                                <p style="font-weight: 500;">Mike Johnson</p>
+                                                <p class="text-sm text-gray">mike@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>DevOps Engineer</td>
+                                    <td>2026-01-08</td>
+                                    <td><span class="status-badge status-selected">Selected</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const pageMap = {
+                'landing': 'landing-page',
+                'login': 'login-page',
+                'register': 'register-page',
+                'application': 'application-page',
+                'candidate': 'candidate-dashboard',
+                'admin': 'admin-dashboard'
+            };
+            
+            const targetPage = document.getElementById(pageMap[pageName]);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            window.scrollTo(0, 0);
+            return false;
+        }
+
+        // Login Handler
+        function handleLogin(event) {
+            event.preventDefault();
+            const isAdmin = document.getElementById('is-admin').checked;
+            if (isAdmin) {
+                showPage('admin');
+            } else {
+                showPage('candidate');
+            }
+        }
+
+        // Register Handler
+        function handleRegister(event) {
+            event.preventDefault();
+            showPage('application');
+        }
+
+        // Application Form
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            // Update step indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById('step-' + i);
+                if (i <= currentStep) {
+                    stepElement.style.color = '#047857';
+                    stepElement.style.fontWeight = '500';
+                } else {
+                    stepElement.style.color = '#6b7280';
+                    stepElement.style.fontWeight = '400';
+                }
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                document.getElementById('form-step-' + currentStep).classList.add('hidden');
+                currentStep++;
+                document.getElementById('form-step-' + currentStep).classList.remove('hidden');
+                updateProgress();
+                
+                // Show/hide buttons
+                document.getElementById('prev-btn').classList.remove('hidden');
+                if (currentStep === totalSteps) {
+                    document.getElementById('next-btn').classList.add('hidden');
+                    document.getElementById('submit-btn').classList.remove('hidden');
+                }
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                document.getElementById('form-step-' + currentStep).classList.add('hidden');
+                currentStep--;
+                document.getElementById('form-step-' + currentStep).classList.remove('hidden');
+                updateProgress();
+                
+                // Show/hide buttons
+                if (currentStep === 1) {
+                    document.getElementById('prev-btn').classList.add('hidden');
+                }
+                document.getElementById('next-btn').classList.remove('hidden');
+                document.getElementById('submit-btn').classList.add('hidden');
+            }
+        }
+
+        function handleApplicationSubmit(event) {
+            event.preventDefault();
+            alert('Application submitted successfully!');
+            showPage('candidate');
+            
+            // Reset form
+            currentStep = 1;
+            document.getElementById('application-form').reset();
+            document.querySelectorAll('.form-step').forEach(step => step.classList.add('hidden'));
+            document.getElementById('form-step-1').classList.remove('hidden');
+            updateProgress();
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>

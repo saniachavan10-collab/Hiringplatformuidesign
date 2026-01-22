@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Test - Veridia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        h1 {
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #0f0f0f;
+            border-left: 4px solid #00ff00;
+        }
+
+        .test-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+
+        .test-result {
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .test-result.loading {
+            background: #333;
+            color: #ffaa00;
+        }
+
+        .test-result.success {
+            background: #0a3d0a;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .test-result.error {
+            background: #3d0a0a;
+            color: #ff0000;
+            border: 1px solid #ff0000;
+        }
+
+        .btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn:hover {
+            background: #00cc00;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .status-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .api-info {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .api-info input {
+            width: 100%;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .api-info label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ff00;
+        }
+
+        pre {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #00ff00;
+            margin-top: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 VERIDIA API CONNECTION TEST</h1>
+
+        <div class="api-info">
+            <label for="apiUrl">Backend API URL:</label>
+            <input type="text" id="apiUrl" value="http://localhost:5000/api">
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">📡 Test 1: Health Check</div>
+            <div id="test1" class="test-result loading">
+                <span class="status-icon">⏳</span> Ready to test...
+            </div>
+            <button class="btn" onclick="testHealthCheck()" style="margin-top: 10px;">Run Test</button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">🔐 Test 2: User Registration</div>
+            <div id="test2" class="test-result loading">
+                <span class="status-icon">⏳</span> Ready to test...
+            </div>
+            <button class="btn" onclick="testRegistration()" style="margin-top: 10px;">Run Test</button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">📊 Test 3: MongoDB Connection</div>
+            <div id="test3" class="test-result loading">
+                <span class="status-icon">⏳</span> Ready to test...
+            </div>
+            <button class="btn" onclick="testDatabase()" style="margin-top: 10px;">Run Test</button>
+        </div>
+
+        <div class="button-group">
+            <button class="btn" onclick="runAllTests()" style="flex: 1;">🚀 Run All Tests</button>
+        </div>
+    </div>
+
+    <script>
+        function getApiUrl() {
+            return document.getElementById('apiUrl').value;
+        }
+
+        async function testHealthCheck() {
+            const resultDiv = document.getElementById('test1');
+            resultDiv.className = 'test-result loading';
+            resultDiv.innerHTML = '<span class="status-icon">⏳</span> Testing health endpoint...';
+
+            try {
+                const response = await fetch(`${getApiUrl()}/health`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'test-result success';
+                    resultDiv.innerHTML = `
+                        <span class="status-icon">✅</span>
+                        <strong>SUCCESS!</strong> Backend is responding<br>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    throw new Error('Health check failed');
+                }
+            } catch (error) {
+                resultDiv.className = 'test-result error';
+                resultDiv.innerHTML = `
+                    <span class="status-icon">❌</span>
+                    <strong>FAILED!</strong> ${error.message}<br><br>
+                    <strong>Troubleshooting:</strong><br>
+                    • Is the backend server running? (npm start in backend folder)<br>
+                    • Is the API URL correct?<br>
+                    • Check the browser console for CORS errors
+                `;
+            }
+        }
+
+        async function testRegistration() {
+            const resultDiv = document.getElementById('test2');
+            resultDiv.className = 'test-result loading';
+            resultDiv.innerHTML = '<span class="status-icon">⏳</span> Testing user registration...';
+
+            const testUser = {
+                fullName: 'Test User ' + Date.now(),
+                email: `test${Date.now()}@example.com`,
+                phone: '+1234567890',
+                password: 'Test123!@#'
+            };
+
+            try {
+                const response = await fetch(`${getApiUrl()}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testUser)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'test-result success';
+                    resultDiv.innerHTML = `
+                        <span class="status-icon">✅</span>
+                        <strong>SUCCESS!</strong> User registration works!<br>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                resultDiv.className = 'test-result error';
+                resultDiv.innerHTML = `
+                    <span class="status-icon">❌</span>
+                    <strong>FAILED!</strong> ${error.message}<br><br>
+                    <strong>Common Issues:</strong><br>
+                    • Backend not running<br>
+                    • MongoDB not connected<br>
+                    • Check backend terminal for errors
+                `;
+            }
+        }
+
+        async function testDatabase() {
+            const resultDiv = document.getElementById('test3');
+            resultDiv.className = 'test-result loading';
+            resultDiv.innerHTML = '<span class="status-icon">⏳</span> Testing database connection...';
+
+            try {
+                // Try to register a user to test DB connection
+                const testUser = {
+                    fullName: 'DB Test ' + Date.now(),
+                    email: `dbtest${Date.now()}@example.com`,
+                    phone: '+1234567890',
+                    password: 'Test123!@#'
+                };
+
+                const response = await fetch(`${getApiUrl()}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testUser)
+                });
+
+                if (response.ok) {
+                    resultDiv.className = 'test-result success';
+                    resultDiv.innerHTML = `
+                        <span class="status-icon">✅</span>
+                        <strong>SUCCESS!</strong> MongoDB is connected and working!<br>
+                        Data was successfully saved to the database.
+                    `;
+                } else {
+                    throw new Error('Database operation failed');
+                }
+            } catch (error) {
+                resultDiv.className = 'test-result error';
+                resultDiv.innerHTML = `
+                    <span class="status-icon">❌</span>
+                    <strong>FAILED!</strong> ${error.message}<br><br>
+                    <strong>Fix:</strong><br>
+                    • Make sure MongoDB is running<br>
+                    • Windows: Check Services<br>
+                    • Mac: brew services start mongodb-community<br>
+                    • Linux: sudo systemctl start mongodb
+                `;
+            }
+        }
+
+        async function runAllTests() {
+            await testHealthCheck();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testRegistration();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await testDatabase();
+        }
+    </script>
+</body>
+</html>
